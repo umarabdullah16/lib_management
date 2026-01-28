@@ -159,12 +159,7 @@ def dashboard():
     decoded = decode_jwt(token) if token else None
     if not decoded:
         return redirect(url_for("login"))
-    return render_template(
-        "dashboard.html",
-        user=decoded["user"],
-        role=decoded["role"],
-        tk=token,
-    )
+    return render_template("dashboard.html", user=decoded["user"], role=decoded["role"])
 
 
 @app.route("/admin")

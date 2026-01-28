@@ -28,7 +28,7 @@
   <div class="box">
     <h2>Welcome {{ user }}</h2>
     <p>Role: <b>{{ role }}</b></p>
-    <p>Token: {{ tk }}</p>
+
     {% if role == 'admin' %}
     <a href="{{ url_for('insert_books') }}">Insert Books</a>
     {% endif %}
