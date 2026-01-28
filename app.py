@@ -10,18 +10,21 @@ from flask import (
 )
 import jwt, datetime, sqlite3, bcrypt
 from functools import wraps
+from auth import decode_jwt, require_role
+from database import get_db, init_db
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "super-secret-key"
 DB = "users.db"
 token_store = []
 
-
+"""
 def get_db():
     if "db" not in g:
         g.db = sqlite3.connect(DB)
         g.db.row_factory = sqlite3.Row
     return g.db
+"""
 
 
 @app.teardown_appcontext
@@ -31,27 +34,32 @@ def close_db(e):
         db.close()
 
 
+"""
 def init_db():
     db = sqlite3.connect(DB)
     cur = db.cursor()
     cur.execute(
         """
+"""
         CREATE TABLE IF NOT EXISTS users (
             username TEXT PRIMARY KEY,
             password BLOB,
             role TEXT
         )
     """
+"""
     )
 
     cur.execute(
         """
+"""
         CREATE TABLE IF NOT EXISTS books (
             id INT PRIMARY KEY,
             title TEXT,
             author TEXT,
             available INT
         )
+"""
 """
     )
     db.commit()
@@ -63,6 +71,8 @@ def init_db():
         cur.execute("INSERT OR IGNORE INTO users VALUES (?, ?, ?)", (u, hashed, r))
     db.commit()
     db.close()
+
+"""
 
 
 def create_jwt(user, role):
@@ -76,6 +86,8 @@ def create_jwt(user, role):
     token_store.append(token)
     return token
 
+
+"""
 
 def decode_jwt(token):
     try:
@@ -99,6 +111,7 @@ def require_role(role):
         return wrapper
 
     return decorator
+"""
 
 
 @app.route("/login", methods=["GET", "POST"])
