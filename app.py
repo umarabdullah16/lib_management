@@ -10,7 +10,7 @@ from flask import (
 )
 import jwt, datetime, sqlite3, bcrypt
 from functools import wraps
-from auth import decode_jwt, require_role
+
 from database import get_db, init_db
 
 app = Flask(__name__)
@@ -87,8 +87,6 @@ def create_jwt(user, role):
     return token
 
 
-"""
-
 def decode_jwt(token):
     try:
         return jwt.decode(token, app.config["SECRET_KEY"], algorithms=["HS256"])
@@ -111,7 +109,6 @@ def require_role(role):
         return wrapper
 
     return decorator
-"""
 
 
 @app.route("/login", methods=["GET", "POST"])
