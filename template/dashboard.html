@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    body {
+      font-family: Arial;
+      background: #eef2f5;
+      padding: 40px;
+    }
+
+    .box {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      max-width: 500px;
+      margin: auto;
+    }
+
+    a {
+      display: block;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <h2>Welcome {{ user }}</h2>
+    <p>Role: <b>{{ role }}</b></p>
+    <p>Token: {{ tk }}</p>
+    {% if role == 'admin' %}
+    <a href="{{ url_for('admin_panel') }}">Admin Panel</a>
+    {% endif %}
+    <a href="{{ url_for('logout') }}">Logout</a>
+  </div>
+</body>
+
+</html>
