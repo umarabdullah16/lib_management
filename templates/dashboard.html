@@ -30,8 +30,9 @@
     <p>Role: <b>{{ role }}</b></p>
     <p>Token: {{ tk }}</p>
     {% if role == 'admin' %}
-    <a href="{{ url_for('admin_panel') }}">Admin Panel</a>
+    <a href="{{ url_for('insert_books') }}">Insert Books</a>
     {% endif %}
+    <a href="{{ url_for('books') }}">View Books</a>
     <a href="{{ url_for('logout') }}">Logout</a>
   </div>
 </body>

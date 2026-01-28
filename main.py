@@ -43,6 +43,17 @@ def init_db():
         )
     """
     )
+
+    cur.execute(
+        """
+        CREATE TABLE IF NOT EXISTS books (
+            id INT PRIMARY KEY,
+            title TEXT,
+            author TEXT,
+            available INT
+        )
+"""
+    )
     db.commit()
 
     users = [("admin", "admin123", "admin"), ("india", "india123", "user")]
@@ -110,6 +121,36 @@ def login():
         return render_template("login.html", error="Invalid credentials")
 
     return render_template("login.html")
+
+
+@app.route("/insert_books", methods=["GET", "POST"])
+@require_role("admin")
+def insert_books(decoded):
+    if request.method == "POST":
+        book_id = request.form["id"]
+        title = request.form["title"]
+        author = request.form["author"]
+        available = request.form["available"]
+
+        db = get_db()
+        cur = db.cursor()
+        cur.execute(
+            "INSERT OR IGNORE INTO books VALUES (?, ?, ?, ?)",
+            (book_id, title, author, available),
+        )
+        db.commit()
+        db.close()
+    return render_template("insert_books.html", user=decoded["user"])
+
+
+@app.route("/books")
+def books():
+    db = get_db()
+    cur = db.cursor()
+    cur.execute("SELECT * FROM books")
+    rows = cur.fetchall()
+    cur.close()
+    return render_template("books.html", books=rows)
 
 
 @app.route("/dashboard")
